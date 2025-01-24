@@ -28,26 +28,45 @@ const Delete = () => {
                     <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-blue-500"></div>
                 </div>
             ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                    {posts.map(product => (
-                        <Link to={`/delete/${product._id}`} key={product.id} className="bg-white p-4 rounded-lg shadow-md">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {posts.map((product) => (
+                        <Link
+                            to={`/delete/${product._id}`}
+                            key={product.id}
+                            className="bg-white p-2 rounded-lg shadow-md flex items-center space-x-4"
+                        >
+                            {/* Left Section: Image */}
+                            <div className="flex-shrink-0">
+                                <img
+                                    src={product.img}
+                                    alt={product.title}
+                                    className="w-20 h-20 object-cover rounded-sm"
+                                />
+                            </div>
 
-                            <img src={product.img} alt={product.title} className="w-full rounded-sm h-[280px] object-cover mb-4" />
-                            <h2 className="text-[22px] font-semibold">{product.title}</h2>
-                            <div className="flex justify-between items-center mb-2 mt-2">
-                                <div className='flex items-center'>
-                                    <span className="me-4 font-semibold text-red-500">रू {product.newPrice}</span>
-                                    <span className="text-sm font-semibold text-gray-700 line-through">रू {product.oldPrice}</span>
-                                </div>
-                                <div>
-                                    <span className="text-green-500 font-bold mb-4">
-                                        {Math.round(((product.newPrice - product.oldPrice) / product.oldPrice) * 100)}% OFF
-                                    </span>
+                            {/* Right Section: Details */}
+                            <div className="flex flex-col flex-grow">
+                                <h2 className="text-[22px] font-semibold">{product.title}</h2>
+                                <div className="flex justify-between items-center mb-2 mt-2">
+                                    {/* Price Section */}
+                                    <div className="flex items-center space-x-2">
+                                        <span className="font-semibold text-sm text-red-500">रू {product.newPrice}</span>
+                                        <span className="text-sm font-semibold text-gray-700 line-through">
+                                            रू {product.oldPrice}
+                                        </span>
+                                    </div>
+                                    {/* Discount Section */}
+                                    <div>
+                                        <span className="text-green-500 font-bold">
+                                            {Math.round(((product.oldPrice - product.newPrice) / product.oldPrice) * 100)}% OFF
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </Link>
                     ))}
                 </div>
+
             )}
         </div>
     );

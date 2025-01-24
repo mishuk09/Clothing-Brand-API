@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import JoditEditor from 'jodit-react';
-import FileBase from 'react-file-base64';
 
 const AddPost = () => {
     const [img, setImg] = useState('');
@@ -13,7 +12,6 @@ const AddPost = () => {
     const [size, setSize] = useState([]);
     const [description, setDescription] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
-    const [fileInputKey, setFileInputKey] = useState(Date.now()); // Add state for key
     const editor = useRef(null);
 
     useEffect(() => {
@@ -59,8 +57,6 @@ const AddPost = () => {
                 setColor([]);
                 setSize([]);
                 setDescription('');
-                // Clear file input by updating the key
-                setFileInputKey(Date.now()); // Reset file input
                 // Set success message
                 setSuccessMessage('Product added successfully!');
             })
@@ -97,14 +93,14 @@ const AddPost = () => {
             )}
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                    <label className="block mb-4 text-sm font-medium text-gray-700">Image</label>
-                    <FileBase
-                        key={fileInputKey} // Add key to FileBase
-                        type="file"
-                        multiple={false}
-                        onDone={({ base64 }) => setImg(base64)}
+                    <label className="block mb-4 text-sm font-medium text-gray-700">Image URL</label>
+                    <input
+                        type="text"
+                        value={img}
+                        onChange={(e) => setImg(e.target.value)}
                         required
-                        className="mt-1"
+                        placeholder="Enter Image URL"
+                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                     />
                 </div>
                 <div>
@@ -112,7 +108,7 @@ const AddPost = () => {
                     <input
                         type="text"
                         value={category}
-                        onChange={e => setCategory(e.target.value)}
+                        onChange={(e) => setCategory(e.target.value)}
                         required
                         className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                     />
@@ -122,7 +118,7 @@ const AddPost = () => {
                     <input
                         type="text"
                         value={title}
-                        onChange={e => setTitle(e.target.value)}
+                        onChange={(e) => setTitle(e.target.value)}
                         required
                         className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                     />
@@ -132,7 +128,7 @@ const AddPost = () => {
                     <input
                         type="number"
                         value={newPrice}
-                        onChange={e => setNewPrice(e.target.value)}
+                        onChange={(e) => setNewPrice(e.target.value)}
                         required
                         className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                     />
@@ -142,7 +138,7 @@ const AddPost = () => {
                     <input
                         type="number"
                         value={oldPrice}
-                        onChange={e => setOldPrice(e.target.value)}
+                        onChange={(e) => setOldPrice(e.target.value)}
                         required
                         className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                     />
@@ -194,8 +190,8 @@ const AddPost = () => {
                     <JoditEditor
                         ref={editor}
                         value={description}
-                        tabIndex={1} // tabIndex of textarea
-                        onBlur={(newContent) => setDescription(newContent)} // preferred to use only this option to update the content for performance reasons
+                        tabIndex={1}
+                        onBlur={(newContent) => setDescription(newContent)}
                         onChange={(newContent) => { }}
                     />
                 </div>
