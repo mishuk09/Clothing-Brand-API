@@ -9,7 +9,7 @@ const Delete = () => {
 
 
     useEffect(() => {
-        axios.get('http://localhost:5000/posts')
+        axios.get('https://mishuk09-clothing-brand-api-backend.onrender.com/posts')
             .then(response => {
                 setPosts(response.data.slice(0, 12));
                 setLoading(false);

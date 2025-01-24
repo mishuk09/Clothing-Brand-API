@@ -18,7 +18,7 @@ const Edit = () => {
                     return;
                 }
 
-                const response = await axios.get('http://localhost:5000/edit', {
+                const response = await axios.get('https://mishuk09-clothing-brand-api-backend.onrender.com/edit', {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -37,7 +37,7 @@ const Edit = () => {
     }, []);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/posts/')
+        axios.get('https://mishuk09-clothing-brand-api-backend.onrender.com/posts/')
             .then(response => {
                 setPosts(response.data.slice(0, 12));
                 setLoading(false);

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import FileBase from 'react-file-base64';
 import { useParams } from 'react-router-dom';
 import JoditEditor from 'jodit-react';
 
@@ -14,6 +13,7 @@ const UpdatePost = () => {
     const [color, setColor] = useState([]);
     const [size, setSize] = useState([]);
     const [description, setDescription] = useState('');
+    const [successfull, setSuccessfull] = useState(false)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -25,7 +25,7 @@ const UpdatePost = () => {
                     return;
                 }
 
-                const response = await axios.get(`http://localhost:5000/posts/${id}`, {
+                const response = await axios.get(`https://mishuk09-clothing-brand-api-backend.onrender.com/posts/${id}`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -54,9 +54,15 @@ const UpdatePost = () => {
         e.preventDefault();
         const updatedPost = { img, category, title, newPrice, oldPrice, color, size, description };
 
-        axios.post(`http://localhost:5000/posts/update/${id}`, updatedPost)
-            .then(res => console.log(res.data))
-            .catch(err => console.log(err));
+        try {
+            axios.post(`https://mishuk09-clothing-brand-api-backend.onrender.com/posts/update/${id}`, updatedPost)
+            setSuccessfull(true);
+            setTimeout(() => {
+                setSuccessfull(false)
+            }, 3000);
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     const handleAddColor = () => {
@@ -82,13 +88,17 @@ const UpdatePost = () => {
     return (
         <div className="container mt-10 p-6 bg-white">
             <h2 className="text-2xl text-center font-semibold mb-6">Update Post</h2>
+
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                     <label className="block mb-4 text-sm font-medium text-gray-700">Image:</label>
-                    <FileBase
-                        type="file"
-                        multiple={false}
-                        onDone={({ base64 }) => setImg(base64)}
+                    <input
+                        type="url"
+                        value={img}
+                        onChange={e => setImg(e.target.value)}
+                        required
+                        placeholder="Enter image URL"
+                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                     />
                 </div>
                 <div>
@@ -150,6 +160,11 @@ const UpdatePost = () => {
                         onChange={(newContent) => { }}
                     />
                 </div>
+                {successfull && (
+                    <div className="mb-4 p-4 text-green-800 bg-green-200 rounded">
+                        Update Successfull......
+                    </div>
+                )}
                 <button type="submit" className="mt-4 w-full p-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
                     Update Post
                 </button>

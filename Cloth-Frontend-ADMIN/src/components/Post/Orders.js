@@ -14,7 +14,7 @@ const Orders = () => {
                     throw new Error('Token not found');
                 }
 
-                const response = await axios.get('http://localhost:5000/item/orders', {
+                const response = await axios.get('https://mishuk09-clothing-brand-api-backend.onrender.com/item/orders', {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -42,7 +42,7 @@ const Orders = () => {
                 throw new Error('Token not found');
             }
 
-            await axios.delete(`http://localhost:5000/item/orders/${orderId}`, {
+            await axios.delete(`https://mishuk09-clothing-brand-api-backend.onrender.com/item/orders/${orderId}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }

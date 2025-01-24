@@ -17,7 +17,7 @@ const Dashboard = () => {
             // http://localhost:000
 
             try {
-                const response = await axios.get('http://localhost:5000/dashboard', {
+                const response = await axios.get('https://mishuk09-clothing-brand-api-backend.onrender.com/dashboard', {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }

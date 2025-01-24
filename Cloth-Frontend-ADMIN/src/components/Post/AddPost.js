@@ -11,7 +11,7 @@ const AddPost = () => {
     const [color, setColor] = useState([]);
     const [size, setSize] = useState([]);
     const [description, setDescription] = useState('');
-    const [successMessage, setSuccessMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState(false);
     const editor = useRef(null);
 
     useEffect(() => {
@@ -24,7 +24,7 @@ const AddPost = () => {
                     return;
                 }
 
-                const response = await axios.get('http://localhost:5000/addpost', {
+                const response = await axios.get('https://mishuk09-clothing-brand-api-backend.onrender.com/addpost', {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -45,7 +45,7 @@ const AddPost = () => {
         e.preventDefault();
         const newPost = { img, category, title, newPrice, oldPrice, color, size, description };
 
-        axios.post('http://localhost:5000/posts/add', newPost)
+        axios.post('https://mishuk09-clothing-brand-api-backend.onrender.com/posts/add', newPost)
             .then(res => {
                 console.log(res.data);
                 // Reset fields
@@ -58,7 +58,10 @@ const AddPost = () => {
                 setSize([]);
                 setDescription('');
                 // Set success message
-                setSuccessMessage('Product added successfully!');
+                setSuccessMessage(true);
+                setTimeout(() => {
+                    setSuccessMessage(false);
+                }, 3000);
             })
             .catch(err => console.log(err));
     }
@@ -86,11 +89,9 @@ const AddPost = () => {
     return (
         <div className="container mt-10 p-6 bg-white">
             <h2 className="text-2xl text-center font-semibold mb-6">Add New Product</h2>
-            {successMessage && (
-                <div className="mb-4 p-4 text-green-800 bg-green-200 rounded">
-                    {successMessage}
-                </div>
-            )}
+
+
+
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                     <label className="block mb-4 text-sm font-medium text-gray-700">Image URL</label>
@@ -195,6 +196,11 @@ const AddPost = () => {
                         onChange={(newContent) => { }}
                     />
                 </div>
+                {successMessage && (
+                    <div className="mb-4 p-4 text-green-800 bg-green-200 rounded">
+                        Add Successfull......
+                    </div>
+                )}
                 <button
                     type="submit"
                     className="mt-4 w-full p-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"

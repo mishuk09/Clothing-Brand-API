@@ -18,7 +18,7 @@ const DeletePost = () => {
                     return;
                 }
 
-                const response = await axios.get(`http://localhost:5000/delete/${id}`, {
+                const response = await axios.get(`https://mishuk09-clothing-brand-api-backend.onrender.com/delete/${id}`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -37,7 +37,7 @@ const DeletePost = () => {
     }, [id]);
 
     const handleDelete = () => {
-        axios.delete(`http://localhost:5000/posts/${id}`)
+        axios.delete(`https://mishuk09-clothing-brand-api-backend.onrender.com/posts/${id}`)
             .then(() => {
                 console.log('Post deleted.');
                 navigate('/delete');
